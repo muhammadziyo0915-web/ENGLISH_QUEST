@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}Ro‘yxatdan o‘tish • English Quest{% endblock %}
+{% block content %}<div class="login card"><span class="pill">NEW PLAYER</span><h1>Yangi profil yarating 🚀</h1><p class="muted">Ismingizni yarating va 180 Unitlik questni boshlang.</p><form method="post">{% csrf_token %}{{ form.as_p }}<button class="btn wide" type="submit">✨ Profil yaratish</button></form><p class="muted">Account bormi? <a href="{% url 'login' %}">Kirish</a></p></div>{% endblock %}

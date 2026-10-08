@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Profil • English Quest{% endblock %}
+{% block content %}
+<section class="profile-layout">
+  <div class="profile-main">
+    <div class="profile-hero">
+      <div class="profile-cover"></div>
+      <div class="profile-identity">
+        <div class="avatar-wrap">
+          {% if profile_obj.avatar %}<img class="avatar-img{% if profile_obj.frame %} frame-{{ profile_obj.frame }}{% endif %}" src="{{ profile_obj.avatar.url }}" alt="Profil rasmi">{% else %}<div class="avatar-fallback{% if profile_obj.frame %} frame-{{ profile_obj.frame }}{% endif %}">{{ user.username|first|upper }}</div>{% endif %}
+          <label for="avatar" class="camera-badge" title="Rasm tanlash">📷</label>
+        </div>
+        <div><h1>{{ user.username }} <span class="crown">♛</span></h1><p>{% if profile_obj.title_name %}<span class="user-title">{{ profile_obj.title_name }}</span>{% else %}English Quest o‘quvchisi{% endif %}</p></div>
+      </div>
+      <div class="xp-row"><span>Level {{ level }}</span><span>{{ p.xp }} XP</span></div>
+      <div class="xp-bar"><span style="width:{% widthratio p.xp 2000 100 %}%"></span></div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><b>⭐</b><strong>{{ level }}</strong><small>Level</small></div>
+      <div class="stat-card"><b>⚡</b><strong>{{ p.xp }}</strong><small>XP</small></div>
+      <div class="stat-card"><b>🪙</b><strong>{{ p.coins }}</strong><small>Coin</small></div>
+      <div class="stat-card"><b>🔥</b><strong>{{ p.streak }}</strong><small>Streak</small></div>
+      <div class="stat-card"><b>❤️</b><strong>{{ p.hearts }}</strong><small>Hearts</small></div>
+    </div>
+
+    <div class="profile-card">
+      <div class="section-title"><div><span class="eyebrow">PROFILE SETTINGS</span><h2>Profilni sozlash</h2></div><span class="edit-icon">✦</span></div>
+      <form method="post" enctype="multipart/form-data" class="profile-form">
+        {% csrf_token %}
+        <div class="upload-row">
+          <div class="big-avatar-preview">
+            {% if profile_obj.avatar %}<img src="{{ profile_obj.avatar.url }}" alt="Profil rasmi">{% else %}<span>{{ user.username|first|upper }}</span>{% endif %}
+          </div>
+          <div class="upload-copy">
+            <h3>Profil rasmingiz</h3>
+            <p>JPG yoki PNG, tavsiya etiladi: kvadrat rasm. Maksimal 5 MB.</p>
+            <label class="upload-btn" for="avatar">📷 Rasm yuklash</label>
+            <input id="avatar" name="avatar" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+            <span id="fileName" class="file-name">Rasm tanlanmagan</span>
+          </div>
+        </div>
+        <label class="field-label">Bio</label>
+        <textarea name="bio" maxlength="500" placeholder="O‘zingiz haqingizda qisqacha yozing...">{{ profile_obj.bio }}</textarea>
+        <div class="bio-foot"><span>O‘zingizni qisqacha tanishtiring ✨</span><span id="bioCount">0 / 500</span></div>
+        <button class="save-btn" type="submit">💾 Saqlash</button>
+      </form>
+    </div>
+  </div>
+
+  <aside class="profile-side">
+    <div class="side-card bio-card">
+      <span class="eyebrow">SIZNING BIO</span>
+      <h3>{{ user.username }}</h3>
+      <p>{% if profile_obj.bio %}{{ profile_obj.bio }}{% else %}Hali bio yozilmagan.{% endif %}</p>
+    </div>
+    <div class="side-card progress-card"><span class="eyebrow">PROGRESS</span><h3>{{ level }} / 180 Unit</h3><div class="mini-progress"><span style="width:{% widthratio p.unlocked_stage 180 100 %}%"></span></div><p>{{ p.completed }} ta Unit yakunlangan</p></div>
+    <a class="home-large" href="{% url 'shop' %}">🛒 Do‘kon</a>
+    <a class="home-large" style="margin-top:10px" href="{% url 'home' %}">🏠 Bosh sahifa</a>
+  </aside>
+</section>
+<script>
+const avatar=document.getElementById('avatar'); const fileName=document.getElementById('fileName'); const bio=document.querySelector('textarea[name=bio]'); const count=document.getElementById('bioCount');
+function updateCount(){count.textContent=(bio.value.length)+' / 500'}
+updateCount(); bio.addEventListener('input',updateCount);
+avatar.addEventListener('change',()=>{const f=avatar.files[0];fileName.textContent=f?.name||'Rasm tanlanmagan';if(f&&f.size>5*1024*1024){alert('Rasm 5 MB dan kichik bo‘lishi kerak.');avatar.value='';fileName.textContent='Rasm tanlanmagan';return;}if(f){const url=URL.createObjectURL(f);document.querySelectorAll('.avatar-img,.big-avatar-preview img').forEach(img=>img.src=url);}});
+</script>
+{% endblock %}

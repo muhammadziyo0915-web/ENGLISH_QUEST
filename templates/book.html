@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Kitob • English Quest{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">LEARNING BOOK</span><h1>English Vocabulary</h1><p>So‘z • o‘qilishi • o‘zbekcha ma’nosi. 🔊</p></div></div>
+<div class="word-grid">{% for word,uz,pron in words %}<article class="word"><div><b>{{ word }}</b><span>({{ pron }})</span></div><strong>{{ uz }}</strong><button type="button" onclick="UzSpeak('{{ pron|escapejs }}','{{ word|escapejs }}')">🔊</button></article>{% endfor %}</div>
+
+{% endblock %}

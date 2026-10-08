@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Bosqichlar • English Quest{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">ENGLISH QUEST</span><h1>180 ta Unit</h1><p>Har Unit: 20 ta random so‘z • 5 daqiqa • keyingisi uchun 19/20. O‘tilgan Unitni takrorlasangiz 20% XP va coin beriladi.</p></div><div class="heading-progress"><b>{{ unlocked|add:'-1' }}</b><small>/ 180 ochilgan</small></div></div>
+<div class="stage-grid">
+{% for s in stages %}
+<a class="stage {% if s.number > unlocked %}locked{% elif s.number in passed %}done{% endif %}" {% if s.number <= unlocked %}href="{% url 'start_stage' number=s.number %}"{% endif %}>
+  <div class="stage-top"><span>{{ s.number }}</span><i>{% if s.number > unlocked %}🔒{% elif s.number in passed %}✓{% else %}▶{% endif %}</i></div>
+  <b>{{ s.title }}</b><small>{{ s.topic }}</small><em>{{ s.level }}</em>{% if s.number in passed %}<span class="replay-tag">🔁 Takrorlash • 20%</span>{% endif %}
+</a>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}Kirish • English Quest{% endblock %}
+{% block content %}<div class="login card"><span class="pill">WELCOME BACK</span><h1>Questga qayting 👋</h1><p class="muted">Profilingizga kirib, o‘qishni davom ettiring.</p><form method="post">{% csrf_token %}{{ form.as_p }}<button class="btn wide" type="submit">🚀 Kirish</button></form><p class="muted">Account yo‘qmi? <a href="{% url 'register' %}">Ro‘yxatdan o‘tish</a></p></div>{% endblock %}

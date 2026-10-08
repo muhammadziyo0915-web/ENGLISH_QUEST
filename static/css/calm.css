@@ -1,0 +1,115 @@
+/* Sokin va kamtarona uslub: bitta asosiy rang, yumshoq yuzalar, kam effekt.
+   Bu fayl app.css va shop.css dan keyin yuklanadi va ularni yumshatadi. */
+:root{
+  --bg:#0f141c; --surface:#151b26; --surface-2:#1a2230; --line:#232d3d; --line-2:#2c384c;
+  --text:#e7eaf0; --muted:#8b95a8; --accent:#5b8def; --accent-soft:#1b2a45;
+  --ok:#3fb68b; --ok-soft:#10261f; --bad:#e0606f; --bad-soft:#2a141a;
+}
+body{background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body:before{background:var(--bg)}
+.bg-orb{display:none}
+h1,h2,h3{letter-spacing:-.01em}
+main{padding:28px 0 70px}
+
+/* yuqori panel */
+.topbar{background:#0f141cf2;border-bottom:1px solid var(--line);backdrop-filter:none}
+.brand{font-size:19px;font-weight:800}.brand b{color:var(--accent)}.brand-icon{font-size:22px}
+.nav-pills{background:transparent;border:0;gap:2px;padding:0}
+.nav-pills a{color:var(--muted);font-weight:600;padding:8px 13px;border-radius:10px}
+.nav-pills a:hover{background:var(--surface-2);color:var(--text)}
+.top-stats span{background:var(--surface);border:1px solid var(--line);border-radius:10px;font-weight:700;color:var(--text)}
+.profile-mini img,.profile-mini span{background:var(--accent)}
+
+/* tugmalar */
+.btn{background:var(--accent);color:#fff;border-radius:11px;font-weight:700}
+.btn:hover{filter:brightness(1.08)}
+.btn.secondary,.secondary{background:var(--surface-2);color:var(--text);border:1px solid var(--line-2)}
+.upload-btn,.save-btn,.home-large,.buy-btn{background:var(--accent);box-shadow:none;border-radius:11px;font-weight:700}
+.buy-btn.ghost{background:var(--surface-2);border:1px solid var(--line-2)}
+.buy-btn:disabled{background:var(--surface-2);color:#5d6a82}
+.pill{background:var(--accent-soft);border:1px solid #29406b;color:#9db8f5;font-weight:700;letter-spacing:.4px}
+.eyebrow{color:var(--muted);font-weight:700;letter-spacing:1.2px}
+
+/* kartalar */
+.card,.stage,.word,.steps>div,.stat-card,.profile-card,.side-card,.shop-box,.item,.review-row,.result-card,.profile-hero{
+  background:var(--surface);border:1px solid var(--line);box-shadow:none;border-radius:16px}
+.stage:hover,.item:hover{transform:none;border-color:var(--line-2);background:var(--surface-2);box-shadow:none}
+.stage.done{border-color:#24473d}.stage.done i{color:var(--ok);font-style:normal;font-weight:800}
+.stage span{font-weight:800}.stage em{color:var(--muted);font-style:normal;font-size:12px}
+.locked{opacity:.4}
+.page-heading h1{font-size:30px;font-weight:800}
+.page-heading p{color:var(--muted)}
+
+/* bosh sahifa */
+.hero-home{min-height:440px}
+.hero h1{font-size:clamp(34px,5.2vw,54px);line-height:1.08;font-weight:800}
+.hero h1 span{color:var(--accent);background:none;-webkit-text-fill-color:currentColor}
+.hero p{color:var(--muted);font-size:17px}
+.quest-orb,.orb{background:var(--surface);border:1px solid var(--line-2);box-shadow:none;width:210px;height:210px}
+.quest-orb b{letter-spacing:3px}.quest-orb small{color:var(--muted)}
+.float-card{display:none}
+.trust-row span{color:var(--muted)}
+.home-stats>div{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+
+/* test oynasi */
+.word-panel{background:var(--surface);border:1px solid var(--line);box-shadow:none;border-radius:20px;padding:36px 32px}
+.word-big{font-size:clamp(40px,7vw,62px);font-weight:800;letter-spacing:-.02em}
+.word-pron{color:#9db8f5;font-weight:600;font-size:19px}
+.word-index{color:var(--muted)}
+.listen-btn,.tool-btn{background:var(--surface-2);border:1px solid var(--line-2);color:var(--text);font-weight:700;border-radius:11px}
+.listen-btn:hover,.tool-btn:hover{background:#202a3b;border-color:#3a4962}
+.tool-btn b{background:var(--accent-soft);color:#9db8f5}
+.answer-inner{background:var(--bg);border:1px solid var(--line);border-radius:13px;min-height:58px}
+.answer-inner:hover{background:var(--surface-2);border-color:var(--line-2);transform:none}
+.answer-inner b{background:var(--surface-2);color:var(--muted);border-radius:8px}
+.answer-inner em{font-weight:600}
+.selected-correct .answer-inner{border-color:var(--ok);background:var(--ok-soft);box-shadow:none}
+.selected-correct .answer-inner b{background:var(--ok)}
+.selected-wrong .answer-inner{border-color:var(--bad);background:var(--bad-soft);box-shadow:none}
+.selected-wrong .answer-inner b{background:var(--bad)}
+.feedback.good{color:var(--ok);background:var(--ok-soft);border-color:var(--ok)}
+.feedback.bad{color:var(--bad);background:var(--bad-soft);border-color:var(--bad)}
+.timer-box{background:var(--surface);border:1px solid var(--line);box-shadow:none;border-radius:14px}
+.timer-box .danger{color:var(--bad)}
+.round-back{background:var(--surface);border:1px solid var(--line-2)}
+.quiz-progress,.xp-bar,.mini-progress{background:var(--surface-2);height:6px}
+.quiz-progress span,.xp-bar span,.mini-progress span{background:var(--accent)}
+.quiz-title p,.quiz-meta,.auto-note{color:var(--muted)}
+
+/* natija va profil */
+.score{font-weight:800}
+.good-badge{color:var(--ok)}.bad-badge{color:var(--bad)}
+.review-row.correct{border-color:#24473d}.review-row.wrong{border-color:#4a2530}
+.reward-row span{background:var(--ok-soft);border-color:#24473d;color:var(--ok);font-weight:800}
+.profile-cover{background:var(--surface-2);opacity:1}
+.avatar-img,.avatar-fallback{border-color:var(--accent);box-shadow:none;background:var(--accent)}
+.big-avatar-preview{background:var(--accent)}
+.upload-row{background:var(--bg);border-color:var(--line)}
+.profile-form textarea,.login input{background:var(--bg);border:1px solid var(--line-2)}
+.profile-form textarea:focus{border-color:var(--accent)}
+.user-title{background:var(--accent-soft);border-color:#29406b;color:#9db8f5}
+.crown{color:#d9b25a}
+
+/* do'kon */
+.balance,.shop-box.daily{background:var(--surface);border:1px solid var(--line)}
+.shop-box.daily{border-color:#29406b;background:var(--accent-soft)}
+.shop-tabs button{background:var(--surface);border:1px solid var(--line);color:var(--muted);font-weight:700}
+.shop-tabs button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.shop-msg{background:var(--surface);border-color:var(--line-2)}
+.shop-msg.success{background:var(--ok-soft);border-color:#24473d;color:var(--ok)}
+.shop-msg.error{background:var(--bad-soft);border-color:#4a2530;color:var(--bad)}
+.item.equipped{border-color:var(--ok);box-shadow:none}
+.item-icon{font-size:30px}
+
+/* ramkalar: yumshoqroq nur */
+.frame-gold{box-shadow:0 0 12px #ffc83d55!important}
+.frame-neon{box-shadow:0 0 12px #2dffd066!important}
+.frame-fire{animation:none;box-shadow:0 0 14px #ff6a1a77!important}
+.frame-diamond{animation:none;box-shadow:0 0 14px #7fe9ff77!important}
+
+footer{border-top:1px solid var(--line);color:#5d6a82}footer span{color:var(--accent)}
+.login{background:var(--surface)}
+a{color:#9db8f5}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.replay-tag{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:var(--ok)}
+.replay-note{color:var(--ok)}

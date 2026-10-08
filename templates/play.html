@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}Unit {{ stage.number }} • English Quest{% endblock %}
+{% block content %}
+<div class="quiz-shell" data-correct="{{ question.correct }}">
+  <div class="quiz-top">
+    <div class="quiz-title"><a class="round-back" href="{% url 'stages' %}">‹</a><div><span class="eyebrow">UNIT {{ stage.number }} • {{ stage.level }}</span><h1>{{ stage.topic }}</h1><p>So‘zni o‘qing va to‘g‘ri o‘zbekcha ma’noni tanlang.</p></div></div>
+    <div class="timer-box"><span>⏱</span><strong id="timer">05:00</strong></div>
+  </div>
+  <div class="quiz-progress"><span style="width:{% widthratio qno total 100 %}%"></span></div>
+  <div class="quiz-meta"><span>{{ qno }} / {{ total }} so‘z</span>{% if replay %}<span class="replay-note">🔁 Takrorlash: 19/20 bo‘lsa XP va coin <b>20%</b></span>{% else %}<span>🏆 Keyingi Unit: <b>19/20</b></span>{% endif %}</div>
+
+  <form method="post" id="wordForm" autocomplete="off">
+    {% csrf_token %}
+    <div class="word-panel">
+      <div class="word-index">SO‘Z {{ qno }}</div>
+      <div class="word-big">{{ word_text }}</div>
+      <div class="word-pron">({{ pronunciation }})</div>
+      <button type="button" class="listen-btn" id="listenBtn">🔊 Eshitish</button>
+      {% if user.is_authenticated %}
+      <div class="tools">
+        <button type="button" class="tool-btn" data-item="time">⏱ +1 daqiqa <b id="cnt-time">{{ inv.time|default:0 }}</b></button>
+        <button type="button" class="tool-btn" data-item="fifty">✂️ 50/50 <b id="cnt-fifty">{{ inv.fifty|default:0 }}</b></button>
+      </div>
+      <div class="tool-msg" id="toolMsg"></div>
+      {% endif %}
+      <div class="answer-grid">
+        {% for letter,text in question.options %}
+        <label class="answer-card{% if letter in hidden %} eliminated{% endif %}" data-letter="{{ letter }}">
+          <input type="radio" name="answer" value="{{ letter }}"{% if letter in hidden %} disabled{% endif %}>
+          <span class="answer-inner"><b>{{ letter }}</b><em>{{ text }}</em><i></i></span>
+        </label>
+        {% endfor %}
+      </div>
+      <div id="feedback" class="feedback"></div>
+    </div>
+  </form>
+  <div class="auto-note">Variantni tanlaganingizdan keyin keyingi so‘z avtomatik ochiladi.</div>
+</div>
+<script>
+(function(){
+  const form=document.getElementById('wordForm');
+  const shell=document.querySelector('.quiz-shell');
+  const correct=shell.dataset.correct;
+  const feedback=document.getElementById('feedback');
+  let locked=false;
+
+  function feedbackTone(ok){
+    const AudioCtx=window.AudioContext||window.webkitAudioContext;
+    if(!AudioCtx) return;
+    const ctx=new AudioCtx();
+    const notes=ok?[660,820,1040]:[210,150];
+    notes.forEach((freq,i)=>{
+      const t=ctx.currentTime+i*(ok?.10:.14);
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.type=ok?'sine':'square'; o.frequency.setValueAtTime(freq,t);
+      o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.10,t+.012);
+      g.gain.exponentialRampToValueAtTime(.0001,t+(ok?.085:.16));
+      o.start(t); o.stop(t+(ok?.10:.18));
+    });
+  }
+
+  window.speakWord=function(){
+    UzSpeak('{{ pronunciation|escapejs }}', '{{ word_text|escapejs }}');
+  };
+  document.getElementById('listenBtn').addEventListener('click',window.speakWord);
+
+  document.querySelectorAll('input[name=answer]').forEach(input=>input.addEventListener('change',()=>{
+    if(locked) return; locked=true;
+    const ok=input.value===correct;
+    document.querySelectorAll('.answer-card').forEach(c=>c.classList.remove('selected-correct','selected-wrong'));
+    input.closest('.answer-card').classList.add(ok?'selected-correct':'selected-wrong');
+    feedback.className='feedback '+(ok?'good':'bad');
+    feedback.textContent=ok?'✓ To‘g‘ri!':'✕ Xato!';
+    feedbackTone(ok);
+    document.querySelectorAll('input[name=answer]').forEach(x=>x.disabled=true);
+    input.disabled=false;
+    setTimeout(()=>form.submit(), ok?520:700);
+  }));
+
+  document.querySelectorAll('.tool-btn').forEach(btn=>btn.addEventListener('click',()=>{
+    if(locked) return;
+    const item=btn.dataset.item, msg=document.getElementById('toolMsg');
+    const fd=new FormData();
+    fd.append('item',item); fd.append('number','{{ stage.number }}'); fd.append('qno','{{ qno }}');
+    fd.append('csrfmiddlewaretoken',form.querySelector('[name=csrfmiddlewaretoken]').value);
+    fetch("{% url 'use_item' %}",{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}})
+      .then(r=>r.json()).then(d=>{
+        msg.innerHTML=d.msg+(d.ok?'':' <a href="{% url 'shop' %}" target="_blank">Do‘kon</a>');
+        if(d.left!==undefined) document.getElementById('cnt-'+item).textContent=d.left;
+        if(d.ok && d.remaining!==undefined) remaining=d.remaining;
+        if(d.ok && d.hide) d.hide.forEach(l=>{
+          const c=document.querySelector('.answer-card[data-letter="'+l+'"]');
+          if(c){ c.classList.add('eliminated'); c.querySelector('input').disabled=true; }
+        });
+      }).catch(()=>{ msg.textContent='Xatolik. Qayta urinib ko‘ring.'; });
+  }));
+
+  let remaining={{ remaining }}; const timer=document.getElementById('timer');
+  function tick(){
+    const m=Math.floor(remaining/60), s=remaining%60; timer.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+    if(remaining<=30) timer.classList.add('danger');
+    if(remaining<=0){ form.submit(); return; }
+    remaining--; setTimeout(tick,1000);
+  } tick();
+})();
+</script>
+{% endblock %}

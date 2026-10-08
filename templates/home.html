@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}English Quest • Bosh sahifa{% endblock %}
+{% block content %}
+<section class="hero hero-home">
+  <div class="hero-copy">
+    <span class="pill">⚡ 180 UNIT • 3 600 SO‘Z</span>
+    <h1>Ingliz tilini<br><span>o‘yin qilib o‘rganing.</span></h1>
+    <p>Har bir Unitda 20 ta so‘z. So‘zning o‘qilishini ko‘ring, ma’nosini tanlang va 5 daqiqalik questni bajaring.</p>
+    <div class="hero-actions"><a class="btn" href="{% url 'stages' %}">🎮 Questni boshlash</a>{% if user.is_authenticated %}<a class="btn secondary" href="{% url 'profile' %}">👤 Profilim</a><a class="btn secondary" href="{% url 'shop' %}">🛒 Do‘kon</a>{% endif %}</div>
+    <div class="trust-row"><span>✓ Random so‘zlar</span><span>✓ 5:00 timer</span><span>✓ 19/20 unlock</span></div>
+  </div>
+  <div class="hero-visual"><div class="quest-orb"><div>📖</div><b>ENGLISH</b><small>QUEST</small></div><span class="float-card fc-one">🔥 Streak</span><span class="float-card fc-two">+10 XP</span></div>
+</section>
+<div class="home-stats"><div><b>180</b><span>Unit</span></div><div><b>3 600</b><span>So‘z</span></div><div><b>20</b><span>Har Unit</span></div><div><b>5 min</b><span>Har test</span></div></div>
+<section class="how-section"><div class="section-title"><div><span class="eyebrow">QANDAY ISHLAYDI?</span><h2>Oddiy. Tez. Qiziqarli.</h2></div></div><div class="steps"><div><i>01</i><b>Unit tanlang</b><p>Ochilgan Unitni tanlang va yangi random urinish boshlang.</p></div><div><i>02</i><b>So‘zni tanlang</b><p>Masalan: <strong>school (skul)</strong> → 4 ta o‘zbekcha variant.</p></div><div><i>03</i><b>Natijani ko‘ring</b><p>20 ta so‘zdan keyin xatolaringiz va to‘g‘ri javoblaringiz chiqadi.</p></div></div></section>
+{% endblock %}

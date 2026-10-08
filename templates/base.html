@@ -1,0 +1,37 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}English Quest{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="{% static 'css/app.css' %}">
+<link rel="stylesheet" href="{% static 'css/shop.css' %}">
+<link rel="stylesheet" href="{% static 'css/calm.css' %}">
+<script src="{% static 'js/uzspeak.js' %}"></script>
+</head>
+<body{% if user.is_authenticated and user.profile.theme %} data-theme="{{ user.profile.theme }}"{% endif %}>
+<div class="bg-orb orb-a"></div><div class="bg-orb orb-b"></div>
+<header class="topbar">
+  <a class="brand" href="{% url 'home' %}"><span class="brand-icon">📖</span><span>English <b>Quest</b></span></a>
+  <nav class="nav-pills">
+    <a href="{% url 'home' %}">🏠 Bosh sahifa</a>
+    <a href="{% url 'stages' %}">🎮 Bosqichlar</a>
+    <a href="{% url 'book' %}">📚 Kitob</a>
+    <a href="{% url 'shop' %}">🛒 Do‘kon</a>
+    {% if user.is_authenticated %}
+      <a class="profile-mini" href="{% url 'profile' %}">
+        {% if user.profile.avatar %}<img class="{% if user.profile.frame %}frame-{{ user.profile.frame }}{% endif %}" src="{{ user.profile.avatar.url }}" alt="Profil">{% else %}<span class="{% if user.profile.frame %}frame-{{ user.profile.frame }}{% endif %}">{{ user.username|first|upper }}</span>{% endif %}
+        Profil
+      </a>
+    {% else %}
+      <a href="{% url 'login' %}">Kirish</a><a href="{% url 'register' %}">Ro‘yxatdan o‘tish</a>
+    {% endif %}
+  </nav>
+  {% if user.is_authenticated %}<div class="top-stats"><span>❤️ {{ p.hearts|default:5 }}</span><a href="{% url 'shop' %}" class="coin-link"><span>🪙 {{ p.coins|default:0 }}</span></a><span>⚡ {{ p.xp|default:0 }} XP</span></div>{% endif %}
+</header>
+<main>{% block content %}{% endblock %}</main>
+<footer>English Quest <span>•</span> Learn <span>•</span> Play <span>•</span> Grow</footer>
+</body>
+</html>

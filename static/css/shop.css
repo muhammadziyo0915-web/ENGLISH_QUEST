@@ -1,0 +1,68 @@
+/* ---- Do'kon ---- */
+.shop-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px}
+.shop-head h1{margin:6px 0}.shop-head p{color:#8997b8;margin:0}
+.balance{padding:12px 20px;border:1px solid #33496f;border-radius:18px;background:#0b1730;text-align:center;min-width:130px}
+.balance small{display:block;color:#7f8eb5;font-weight:800;font-size:11px;letter-spacing:1.5px}.balance b{font-size:26px}
+.shop-msgs{display:grid;gap:8px;margin-bottom:14px}
+.shop-msg{padding:12px 16px;border-radius:14px;font-weight:800;border:1px solid #30466e;background:#0b1730}
+.shop-msg.success{border-color:#22db8b;background:#0b3a2a;color:#55f2a7}
+.shop-msg.error{border-color:#ff5066;background:#3a101a;color:#ff6d7e}
+.shop-msg.info{border-color:#5879c7;color:#a9bbec}
+.shop-top{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.shop-box{padding:20px;border:1px solid #253d66;border-radius:20px;background:#0a1730}
+.shop-box h3{margin:6px 0 8px;font-size:24px}.shop-box p{color:#8190ae;font-size:13px;line-height:1.5;margin:0 0 12px}
+.shop-box.daily{background:linear-gradient(135deg,#1a2e69,#3b2a86);border-color:#5b6cff}
+.earn{margin:8px 0 0;padding-left:18px;color:#a9bbec;font-size:14px;line-height:1.9}
+.shop-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.shop-tabs button{padding:9px 15px;border-radius:12px;border:1px solid #30466e;background:#0b1730;color:#c8d0e9;font-weight:800;cursor:pointer}
+.shop-tabs button.on{background:linear-gradient(135deg,#397eff,#7655ff);border-color:transparent;color:#fff}
+.shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.item{display:flex;flex-direction:column;padding:18px;border:1px solid #22395f;border-radius:20px;background:#09162d;transition:.2s}
+.item:hover{transform:translateY(-3px);border-color:#6d79ff;box-shadow:0 15px 35px #0005}
+.item.equipped{border-color:#21dc8a;box-shadow:0 0 28px #21dc8a22}
+.item-icon{font-size:38px;margin-bottom:6px}.item h3{margin:0 0 6px;font-size:18px}
+.item p{color:#8190ae;font-size:13px;line-height:1.5;flex:1;margin:0 0 12px}
+.owned{color:#a9bbec;font-size:13px;margin-bottom:8px}
+.buy-btn{width:100%;padding:11px 14px;border:0;border-radius:13px;background:linear-gradient(135deg,#397eff,#7655ff);color:#fff;font-weight:900;cursor:pointer;font-size:15px}
+.buy-btn small{font-weight:700;opacity:.85}
+.buy-btn:disabled{background:#1a2744;color:#6b7aa0;cursor:not-allowed}
+.buy-btn.ghost{background:#14254a;border:1px solid #30466e}
+.use-form{margin-top:8px}
+@media(max-width:980px){.shop-grid{grid-template-columns:repeat(3,1fr)}.shop-top{grid-template-columns:1fr}}
+@media(max-width:680px){.shop-grid{grid-template-columns:repeat(2,1fr)}.item{padding:14px}.shop-head{flex-direction:column}}
+
+/* ---- Ramkalar ---- */
+.frame-gold{border-color:#ffc83d!important;box-shadow:0 0 22px #ffc83d88!important}
+.frame-neon{border-color:#2dffd0!important;box-shadow:0 0 26px #2dffd0aa,0 0 4px #2dffd0 inset!important}
+.frame-fire{border-color:#ff7a1a!important;box-shadow:0 0 28px #ff4d1acc!important;animation:fireGlow 1.4s ease-in-out infinite alternate}
+.frame-rainbow{animation:rainbowFrame 4s linear infinite}
+.frame-diamond{border-color:#bdf3ff!important;box-shadow:0 0 30px #7fe9ffcc,0 0 8px #fff inset!important;animation:diamondShine 2.2s ease-in-out infinite alternate}
+@keyframes fireGlow{from{box-shadow:0 0 18px #ff4d1a88}to{box-shadow:0 0 38px #ffb21acc}}
+@keyframes rainbowFrame{0%{border-color:#ff4d6d;box-shadow:0 0 24px #ff4d6d99}25%{border-color:#ffd24d;box-shadow:0 0 24px #ffd24d99}50%{border-color:#4dff9a;box-shadow:0 0 24px #4dff9a99}75%{border-color:#4d9aff;box-shadow:0 0 24px #4d9aff99}100%{border-color:#ff4d6d;box-shadow:0 0 24px #ff4d6d99}}
+@keyframes diamondShine{from{box-shadow:0 0 18px #7fe9ff88}to{box-shadow:0 0 40px #ffffffcc}}
+.profile-mini .frame-gold,.profile-mini .frame-neon,.profile-mini .frame-fire,.profile-mini .frame-rainbow,.profile-mini .frame-diamond{border:2px solid}
+.user-title{display:inline-block;margin-top:2px;padding:3px 10px;border-radius:99px;background:#1a2e69;border:1px solid #4660b8;color:#c9d6ff;font-size:12px;font-weight:900}
+
+/* ---- Mavzular ---- */
+body[data-theme="ocean"]:before{background:radial-gradient(circle at 15% 10%,#1b6fa855,transparent 34%),radial-gradient(circle at 85% 20%,#12b8c444,transparent 30%),linear-gradient(145deg,#03121f,#06243a 50%,#031420)}
+body[data-theme="ocean"] .brand b,body[data-theme="ocean"] .word-pron{color:#4dd0ff}
+body[data-theme="sunset"]:before{background:radial-gradient(circle at 15% 10%,#d9467a55,transparent 34%),radial-gradient(circle at 85% 20%,#ff8a3d44,transparent 30%),linear-gradient(145deg,#1a0a1f,#2a1030 50%,#170a1b)}
+body[data-theme="sunset"] .brand b,body[data-theme="sunset"] .word-pron{color:#ff9a6b}
+body[data-theme="forest"]:before{background:radial-gradient(circle at 15% 10%,#2a8f5a55,transparent 34%),radial-gradient(circle at 85% 20%,#7bbf3a33,transparent 30%),linear-gradient(145deg,#04140d,#082418 50%,#04110b)}
+body[data-theme="forest"] .brand b,body[data-theme="forest"] .word-pron{color:#6be39a}
+body[data-theme="onyx"]:before{background:linear-gradient(145deg,#000,#0a0a0f 50%,#000)}
+body[data-theme="onyx"] .brand b,body[data-theme="onyx"] .word-pron{color:#c9c9d6}
+body[data-theme="ocean"] .bg-orb.orb-a{background:#12b8c4}body[data-theme="sunset"] .bg-orb.orb-a{background:#ff6a3d}body[data-theme="forest"] .bg-orb.orb-a{background:#2fbf71}body[data-theme="onyx"] .bg-orb{opacity:.05}
+
+/* ---- Test paytidagi yordamchilar ---- */
+.tools{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:-8px 0 20px}
+.tool-btn{padding:9px 14px;border-radius:13px;border:1px solid #405e98;background:#101f3e;color:#fff;font-weight:800;cursor:pointer}
+.tool-btn:hover{border-color:#688cff;background:#162b54}.tool-btn b{margin-left:6px;padding:1px 8px;border-radius:99px;background:#243a6e}
+.tool-btn:disabled{opacity:.5;cursor:not-allowed}
+.tool-msg{text-align:center;color:#8fa7ff;font-size:13px;min-height:18px;margin:-12px 0 12px}
+.tool-msg a{color:#b9c8ff}
+.answer-card.eliminated{opacity:.2;pointer-events:none;filter:grayscale(1)}
+.reward-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 0}
+.reward-row span{padding:8px 14px;border-radius:12px;background:#0b3a2a;border:1px solid #22db8b;color:#55f2a7;font-weight:900}
+.reward-notes{margin-top:10px;color:#a9bbec;font-size:14px}.reward-notes div{margin:4px 0}
+.coin-link{text-decoration:none;color:inherit}

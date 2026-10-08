@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Do‘kon • English Quest{% endblock %}
+{% block content %}
+<div class="page-heading shop-head">
+  <div><span class="eyebrow">ENGLISH QUEST</span><h1>🛒 Do‘kon</h1><p>Coinlaringizni yordamchilar, ramkalar, unvonlar va mavzularga sarflang.</p></div>
+  <div class="balance"><small>Balans</small><b>🪙 {{ p.coins }}</b></div>
+</div>
+
+{% if messages %}<div class="shop-msgs">{% for m in messages %}<div class="shop-msg {{ m.tags }}">{{ m }}</div>{% endfor %}</div>{% endif %}
+
+<div class="shop-top">
+  <div class="shop-box daily">
+    <span class="eyebrow">KUNLIK SOVG‘A</span>
+    <h3>🎁 +{{ daily_reward }} 🪙</h3>
+    <p>Har kuni kiring: ketma-ket kunlar uchun sovg‘a oshib boradi (7 kungacha).</p>
+    <form method="post" action="{% url 'shop_daily' %}">{% csrf_token %}
+      <button class="buy-btn" {% if not can_daily %}disabled{% endif %}>{% if can_daily %}Sovg‘ani olish{% else %}Bugun olingan ✓{% endif %}</button>
+    </form>
+  </div>
+  <div class="shop-box">
+    <span class="eyebrow">YURAKLAR</span>
+    <h3>❤️ {{ p.hearts }} / {{ hearts_max }}</h3>
+    <p>{% if p.hearts < hearts_max %}Keyingi yurak ≈ <b id="heartTimer" data-sec="{{ next_heart }}"></b> da qaytadi.{% else %}Yuraklaringiz to‘la.{% endif %} Unitdan o‘tolmasangiz 1 ta ketadi. 0 bo‘lsa test boshlab bo‘lmaydi.</p>
+  </div>
+  <div class="shop-box">
+    <span class="eyebrow">COIN QANDAY TOPILADI?</span>
+    <ul class="earn">
+      <li>Unitdan o‘tish: <b>+25</b> 🪙</li>
+      <li>20/20 natija: <b>+15</b> bonus</li>
+      <li>Kunlik sovg‘a: <b>+10…45</b></li>
+      <li>Omad qutisi: tasodifiy</li>
+    </ul>
+  </div>
+</div>
+
+<div class="shop-tabs" id="shopTabs">
+  {% for key,label in tabs %}<button type="button" class="{% if forloop.first %}on{% endif %}" data-tab="{{ key }}">{{ label }}</button>{% endfor %}
+</div>
+
+<div class="shop-grid">
+{% for c in cards %}
+  <article class="item {% if c.equipped %}equipped{% endif %}" data-tab="{{ c.tab }}">
+    <div class="item-icon">{{ c.icon }}</div>
+    <h3>{{ c.name }}</h3>
+    <p>{{ c.desc }}</p>
+    {% if c.kind == 'frame' or c.kind == 'title' or c.kind == 'theme' %}
+      {% if c.has %}
+        <form method="post" action="{% url 'shop_equip' %}">{% csrf_token %}
+          <input type="hidden" name="kind" value="{{ c.kind }}">
+          {% if c.equipped %}
+            <input type="hidden" name="item" value=""><button class="buy-btn ghost">✓ Kiyilgan • Yechish</button>
+          {% else %}
+            <input type="hidden" name="item" value="{{ c.key }}"><button class="buy-btn">Kiyish</button>
+          {% endif %}
+        </form>
+      {% else %}
+        <form method="post" action="{% url 'shop_buy' %}" {% if c.price >= 300 %}onsubmit="return confirm('{{ c.name|escapejs }} — {{ c.price }} coin. Sotib olasizmi?')"{% endif %}>{% csrf_token %}
+          <input type="hidden" name="item" value="{{ c.key }}">
+          <button class="buy-btn" {% if not c.afford %}disabled{% endif %}>🪙 {{ c.price }}{% if not c.afford %} <small>(yana {{ c.missing }})</small>{% endif %}</button>
+        </form>
+      {% endif %}
+    {% else %}
+      {% if c.kind == 'consumable' %}<div class="owned">Sizda: <b>{{ c.owned }}</b></div>{% endif %}
+      <form method="post" action="{% url 'shop_buy' %}" {% if c.price >= 300 %}onsubmit="return confirm('{{ c.name|escapejs }} — {{ c.price }} coin. Sotib olasizmi?')"{% endif %}>{% csrf_token %}
+        <input type="hidden" name="item" value="{{ c.key }}">
+        <button class="buy-btn" {% if not c.afford %}disabled{% endif %}>🪙 {{ c.price }}{% if not c.afford %} <small>(yana {{ c.missing }})</small>{% endif %}</button>
+      </form>
+      {% if c.key == 'unlock' and c.owned > 0 and p.unlocked_stage < max_stage %}
+        <form method="post" action="{% url 'shop_unlock' %}" class="use-form">{% csrf_token %}<button class="buy-btn ghost">🗝 Ishlatish (Unit {{ p.unlocked_stage|add:1 }})</button></form>
+      {% endif %}
+    {% endif %}
+  </article>
+{% endfor %}
+</div>
+
+<script>
+(function(){
+  const tabs=document.querySelectorAll('#shopTabs button'), items=document.querySelectorAll('.item');
+  tabs.forEach(b=>b.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.toggle('on',x===b));
+    items.forEach(i=>i.style.display=(b.dataset.tab==='all'||i.dataset.tab===b.dataset.tab)?'':'none');
+  }));
+  const t=document.getElementById('heartTimer');
+  if(t){ let s=parseInt(t.dataset.sec,10);
+    (function tick(){ const m=Math.floor(s/60), r=s%60; t.textContent=m+':'+String(r).padStart(2,'0'); if(s<=0){location.reload();return;} s--; setTimeout(tick,1000); })(); }
+})();
+</script>
+{% endblock %}

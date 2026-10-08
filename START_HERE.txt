@@ -1,0 +1,46 @@
+ENGLISH QUEST — 180 UNIT FINAL
+
+Features:
+- 180 Units / 3,600 vocabulary questions
+- One word per screen: English word + Uzbek-style pronunciation
+- Four Uzbek meaning choices
+- Automatic next word after each choice (no Next button)
+- 5-minute timer per Unit
+- Every new attempt starts from the beginning with a new random order
+- 19/20 unlock rule
+- Full result review: correct/wrong, selected answer, correct answer
+- XP, coins, hearts, streak, progress
+- Profile photo upload with preview
+- Bio editor
+- Polished dark neon/glass UI
+- Correct answer: green feedback + short success sound
+- Wrong answer: red feedback + short error sound
+- Word pronunciation button is intentionally slower (rate 0.72)
+- Home button available from the main navigation and result page
+
+Windows PowerShell:
+1. py -m venv .venv
+2. .venv\Scripts\Activate.ps1
+3. python -m pip install -r requirements.txt
+4. py manage.py migrate
+5. py manage.py runserver
+
+Open http://127.0.0.1:8000/
+
+If using an old database without the new profile migration, run:
+py manage.py migrate
+
+--- DO'KON (yangi) ---
+Sahifa: /shop/ (yuqoridagi menyuda "Do'kon")
+- Coin topish: Unitdan o'tish +25, 20/20 uchun +15 bonus, kunlik sovg'a +10...45
+- Yordamchilar: +1 yurak, yuraklarni to'ldirish, +1 daqiqa, 50/50, Qalqon (18/20 o'tadi),
+  Streak himoyasi, XP x2, Coin x2, Unit kaliti, Omad qutisi
+- Doimiy: ramkalar, unvonlar, mavzular (sotib olib "Kiyish" bosiladi)
+- Yuraklar: har 10 daqiqada 1 ta qaytadi; 0 bo'lsa test boshlab bo'lmaydi
+- Narxlar va mahsulotlar: game/shop.py
+- Yangilashdan keyin bir marta: py manage.py migrate
+
+--- TAKRORLASH ---
+Oldin o'tilgan Unitni qayta o'tsangiz XP va coin 20% beriladi (Unit ochilmaydi, boosterlar sarflanmaydi).
+Bosqichlar sahifasida o'tilgan Unitlar ✓ bilan ko'rinadi.
+Uslub: static/css/calm.css (sokin, bitta asosiy rang).
